@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang='zh-cn'>
+
+<head>
+  <meta charset='utf-8'>
+  <link href = "styles/style.css" rel = "stylesheet">
+  <!-- <link href="https://fonts.font.im/css?family=Open+Sans" rel="stylesheet" type="text/css">  -->
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+  <title>第二页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://unpkg.com/vue@next"></script>
+  <!-- 防抖 节流 -->
+  <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
+  <script src="scripts/main.js" defer></script>
+</head>
+
+<body>
+  <h1>Mozilla</h1>
+  <img src="images/icon-web.jpeg" alt="图标">
+  <p id = "titleid">Mozilla 是一个全球社区，这里聚集这来自五湖四海的</p>
+  <ul>
+    <li>技术人员</li>
+    <li>思考者</li>
+    <li>建造者</li>
+  </ul>
+  <p>我们致力于让internet保持活力，保持畅通，人人皆可贡献，人人皆可创造。</p>
+
+  <button>切换用户</button>
+
+  <p> 事件传递 </p>
+  <div id="app">
+    <div id="out" @click.self="outAction" style="flex: 1; display: flex; min-height: 100; background-color: beige;">
+      <button @click="innerAction">inner button</button>
+    </div>
+
+    <div id="v-model-radiobutton" class="demo">
+      <!-- for="two" 的作用未知 -->
+      <input type="radio" id="one" value="One11" v-model="picked" />
+      <label for="one">One1</label>
+      <br />
+      <input type="radio" id="two" value="TWO11"  v-model="picked" />
+      <label for="two">Two1</label>
+      <br />
+      <span>Picked: {{ picked }}</span>
+    </div>
+
+    <div id="v-model-select" class="demo">
+      <select v-model="selected">
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <span>Selected: {{ selected }}</span>
+    </div>
+
+  </div>
+  <!-- 
+  js的事件传递流程有两个阶段第一个是事件捕获阶段，第二个是事件冒泡阶段
+  事件捕获阶段是从上到下传递事件，事件冒泡阶段是从下到上传递事件。
+
+    stop：阻止单击事件继续往上传播
+    prevent：防止默认事件的执行 比如a的跳转，Form的提交
+    capture： 添加事件监听器时使用事件捕获模式 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理(外部事件增加了capture， 内部的stop将失效)
+    self：只生效由自身产生的事件
+    once：单次执行
+    passive： ？
+
+    注：事件修饰符可以串联使用 @click.self.prevent
+   -->
+  <script>
+    const App = {
+      data() {
+        return {
+          counter: 0,
+          picked: '',
+          selected: ''
+        }
+      },
+
+      computed: {
+      },
+
+      created() {
+      },
+
+      mounted() {
+      },
+      methods: {
+        outAction() {
+          alert("外部")
+        },
+        
+        innerAction() {
+          var param = {source : '1',
+                       compression : '2',
+                       watermarkrequired : '1'
+                      }
+          litheform.getPhoto(param, function (res, error) {
+            if (error != null) return;
+            alert(JSON.stringify(res))
+          })
+        }
+      }
+    }
+
+    // 创建 Vue 应用
+    const app = Vue.createApp(App);
+
+    // 定义名为 todo-item 的新组件
+    app.component('todo-item', {
+      props: ['todo'],
+      template: `<li>{{ todo.text }}</li>`
+    })
+
+    // 挂载 Vue 应用
+    app.mount('#app')
+
+
+
+  </script>
+</body>
+
+</html>
